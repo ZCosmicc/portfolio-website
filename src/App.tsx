@@ -71,7 +71,7 @@ function App() {
 
   // EMAILJS INITIALIZATION - Initialize EmailJS service
   useEffect(() => {
-    emailjs.init('VJ-8SHyHmWD-CQvuJ');
+    emailjs.init('JVf-CrGRWuLwqu9pk');
   }, []);
 
   // MOUSE TRACKING - track mouse movement untuk gradient effect (throttled & optimized)
@@ -317,8 +317,8 @@ function App() {
 
     try {
       await emailjs.send(
-        'service_4p98noi',
-        'template_ghfcilk',
+        'service_olxwm1w',
+        'template_412bsoh',
         {
           to_email: 'farizfadillah612@gmail.com',
           from_name: formData.name,
