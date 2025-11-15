@@ -51,6 +51,7 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState<{ name?: string; email?: string; message?: string }>({});
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
   const waveRef = useRef<HTMLSpanElement>(null);
   const lastMouseMoveTime = useRef<number>(Date.now());
@@ -67,6 +68,19 @@ function App() {
     setTimeout(() => {
       setToasts(prev => prev.filter(t => t.id !== id));
     }, 4000);
+  };
+
+  // CV DOWNLOAD HANDLER
+  const handleDownloadCV = () => {
+    // Create a simple placeholder PDF download
+    // In production, replace with your actual CV PDF file
+    const cvUrl = '/cv.pdf'; // Place your CV.pdf in the public folder
+    const link = document.createElement('a');
+    link.href = cvUrl;
+    link.download = 'Fariz_Fadillah_CV.pdf';
+    link.click();
+    addToast('✅ CV downloaded successfully!', 'success');
+    setIsMenuOpen(false);
   };
 
   // EMAILJS INITIALIZATION - Initialize EmailJS service
@@ -347,6 +361,84 @@ function App() {
       style={{ cursor: 'crosshair' }}
     >
       
+      {/* PIXEL LAYER - Behind all content */}
+      <div className="fixed inset-0 pointer-events-none z-0"></div>
+
+      {/* Click outside to close menu */}
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )}
+
+      {/* FLOATING HAMBURGER MENU - Fixed on right side */}
+      <div className="fixed top-8 right-8 z-50">
+        {/* Hamburger Button */}
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="w-14 h-14 flex flex-col justify-center items-center gap-1.5 backdrop-blur-md bg-white/10 border border-white/20 rounded-full hover:bg-white/20 transition-all duration-300 group"
+        >
+          <span className={`w-5 h-0.5 bg-white transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`w-5 h-0.5 bg-white transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`} />
+          <span className={`w-5 h-0.5 bg-white transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+        </button>
+
+        {/* Menu Dropdown */}
+        {isMenuOpen && (
+          <div className="absolute top-20 right-0 w-56 backdrop-blur-2xl bg-white/10 border border-white/20 rounded-2xl p-4 space-y-3 animate-slide-in shadow-2xl">
+            {/* CV Download Button */}
+            <button
+              onClick={handleDownloadCV}
+              className="w-full px-4 py-3 rounded-lg bg-gradient-to-r from-blue-500/80 to-purple-500/80 hover:from-blue-600 hover:to-purple-600 text-white font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 border border-white/20"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19v-7m0 0V5m0 7l-4-4m4 4l4-4" />
+              </svg>
+              Download CV
+            </button>
+
+            {/* Certificates Button */}
+            <button
+              onClick={() => {
+                scrollToSection('contact');
+                setIsMenuOpen(false);
+              }}
+              className="w-full px-4 py-3 rounded-lg bg-gradient-to-r from-cyan-500/80 to-blue-500/80 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 border border-white/20"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Certificates
+            </button>
+
+            {/* Divider */}
+            <div className="h-px bg-white/10" />
+
+            {/* Quick Links */}
+            <button
+              onClick={() => {
+                scrollToSection('projects');
+                setIsMenuOpen(false);
+              }}
+              className="w-full px-4 py-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 font-semibold text-sm transition-all duration-300"
+            >
+              Projects
+            </button>
+
+            <button
+              onClick={() => {
+                scrollToSection('contact');
+                setIsMenuOpen(false);
+              }}
+              className="w-full px-4 py-2 rounded-lg text-white/80 hover:text-white hover:bg-white/10 font-semibold text-sm transition-all duration-300"
+            >
+              Contact
+            </button>
+          </div>
+        )}
+      </div>
+
       {/* PIXEL LAYER - Behind all content */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {clickEffects.map(effect => (
@@ -783,7 +875,7 @@ function App() {
       <footer className="py-12 px-4 relative z-10">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500">© 2025 Fariz Fadillah. All rights reserved.</p>
-          <p className="text-gray-500">Thanks for checking out this site.</p>
+          <p className="text-gray-500">Thanks for visiting my site.</p>
         </div>
       </footer>
 
