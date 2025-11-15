@@ -951,8 +951,17 @@ function App() {
           />
           
           {/* Modal Content */}
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="w-full max-w-6xl max-h-[90vh] bg-black/40 backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden flex flex-col">
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            onClick={() => {
+              setIsCertificatesModalOpen(false);
+              setSelectedCertificate(null);
+            }}
+          >
+            <div 
+              className="w-full max-w-6xl max-h-[90vh] bg-black/40 backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
               {/* Header */}
               <div className="flex justify-between items-center p-8 border-b border-white/10">
                 <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Certificates & Courses</h2>
