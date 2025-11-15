@@ -5,11 +5,11 @@ html {
 /* MARQUEE ANIMATIONS */
 @keyframes marquee-smooth {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-33.333%); }
+  100% { transform: translateX(-100%); }
 }
 
 @keyframes marquee-smooth-reverse {
-  0% { transform: translateX(-33.333%); }
+  0% { transform: translateX(-100%); }
   100% { transform: translateX(0); }
 }
 
@@ -41,19 +41,19 @@ html {
 }
 
 .animate-marquee-smooth {
-  animation: marquee-smooth 25s linear infinite;
+  animation: marquee-smooth 30s linear infinite;
 }
 
 .animate-marquee-smooth-reverse {
-  animation: marquee-smooth-reverse 25s linear infinite;
+  animation: marquee-smooth-reverse 30s linear infinite;
 }
 
 .animate-marquee-fast {
-  animation: marquee-fast 20s linear infinite;
+  animation: marquee-fast 30s linear infinite;
 }
 
 .animate-marquee-fast-reverse {
-  animation: marquee-fast-reverse 20s linear infinite;
+  animation: marquee-fast-reverse 30s linear infinite;
 }
 
 /* GRADIENT ANIMATIONS */

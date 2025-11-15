@@ -655,7 +655,7 @@ function App() {
       <section className="py-20 border-y border-gray-800 relative z-10">
         <div className="overflow-hidden mb-12">
           <div className="flex animate-marquee-smooth">
-            {[...skills, ...skills, ...skills].map((skill, idx) => (
+            {[...skills, ...skills].map((skill, idx) => (
               <div 
                 key={`l2r-${idx}`}
                 className="flex-shrink-0 mx-8 group cursor-pointer"
@@ -678,7 +678,7 @@ function App() {
 
         <div className="overflow-hidden">
           <div className="flex animate-marquee-smooth-reverse">
-            {[...skills.slice(-Math.floor(skills.length / 3)), ...skills, ...skills].map((skill, idx) => (
+            {[...skills, ...skills].map((skill, idx) => (
               <div 
                 key={`r2l-${idx}`}
                 className="flex-shrink-0 mx-8 group cursor-pointer"
