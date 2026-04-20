@@ -224,8 +224,8 @@ function App() {
     {
       id: 1,
       title: "Yasaka Handil Bakti",
-      description: "A culinary UMKM landing page website featuring a digital menu, storefront, and WhatsApp integration with a responsive mobile-first design.",
-      tech: ["Vite", "Tailwind CSS", "React"],
+      description: "A culinary UMKM landing page website featuring a digital menu, storefront, Google Maps integration, and WhatsApp connectivity with a responsive mobile-first design.",
+      tech: ["Vite", "Tailwind CSS", "React", "Google Maps"],
       image: "/projects/Yasaka.png",
       demo: "https://yasaka-handilbakti.netlify.app"
     },
