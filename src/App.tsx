@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Github, Linkedin, Mail, Phone, Send, } from 'lucide-react';
+import { Github, Linkedin, Mail, Send } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 // TYPES - TypeScript interfaces untuk type safety
@@ -72,15 +72,24 @@ function App() {
   };
 
   // CV DOWNLOAD HANDLER
-  const handleDownloadCV = () => {
-    // Create a simple placeholder PDF download
-    // In production, replace with your actual CV PDF file
+  const handleDownloadCV = async () => {
     const cvUrl = '/CV Fariz Fadillah - Update Jan.pdf';
-    const link = document.createElement('a');
-    link.href = cvUrl;
-    link.download = 'CV Fariz Fadillah.pdf';
-    link.click();
-    addToast('✅ CV downloaded successfully!', 'success');
+    try {
+      const response = await fetch(cvUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'CV Fariz Fadillah.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      addToast('✅ CV downloaded successfully!', 'success');
+    } catch (error) {
+      console.error('Download failed:', error);
+      addToast('❌ Download failed. Please try again.', 'error');
+    }
     setIsMenuOpen(false);
   };
 
@@ -222,12 +231,13 @@ function App() {
     },
     {
       id: 2,
-      title: "ReCV AI",
-      description: "An AI-powered resume builder with a unique Neobrutalism aesthetic, featuring ATS-friendly templates and integrated cover letter generation.",
-      tech: ["Next.js", "Tailwind CSS", "OpenAI API"],
+      title: "ReCV. AI",
+      description: "A professional AI-powered platform for building ATS-friendly CVs and tailored cover letters. Features 7 professional designs, Groq AI (Llama 3) integration, and multi-language support (English/Indonesian).",
+      tech: ["Next.js 14", "Tailwind CSS", "Supabase", "Groq AI"],
       image: "/projects/ReCV.png",
       demo: "https://recv-ai.me"
     },
+    /* 
     {
       id: 3,
       title: "E-Commerce Platform",
@@ -242,6 +252,7 @@ function App() {
       tech: ["TypeScript", "React", "Firebase", "Tailwind"],
       image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=600&fit=crop"
     }
+    */
   ];
 
 
@@ -752,7 +763,7 @@ function App() {
                   className="flex items-center gap-4 text-xl hover:text-gray-400 transition-colors group"
                 >
                   <div className="w-12 h-12 border border-white group-hover:bg-white group-hover:text-black transition-all flex items-center justify-center">
-                    <Phone size={20} />
+                    <i className="si si-whatsapp text-xl"></i>
                   </div>
                   <span>+62 878-7313-9405</span>
                 </a>
