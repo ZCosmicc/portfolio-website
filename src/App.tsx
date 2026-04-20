@@ -38,15 +38,6 @@ interface Toast {
   message: string;
 }
 
-interface Certificate {
-  id: number;
-  title: string;
-  issuer: string;
-  date: string;
-  image: string;
-  link?: string;
-  description?: string;
-}
 
 function App() {
   // STATE
@@ -62,8 +53,6 @@ function App() {
   const [formErrors, setFormErrors] = useState<{ name?: string; email?: string; message?: string }>({});
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCertificatesModalOpen, setIsCertificatesModalOpen] = useState(false);
-  const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const waveRef = useRef<HTMLSpanElement>(null);
   const lastMouseMoveTime = useRef<number>(Date.now());
@@ -86,10 +75,10 @@ function App() {
   const handleDownloadCV = () => {
     // Create a simple placeholder PDF download
     // In production, replace with your actual CV PDF file
-    const cvUrl = '/cv.pdf'; // Place your CV.pdf in the public folder
+    const cvUrl = '/CV Fariz Fadillah - Update Jan.pdf';
     const link = document.createElement('a');
     link.href = cvUrl;
-    link.download = 'Fariz_Fadillah_CV.pdf';
+    link.download = 'CV Fariz Fadillah.pdf';
     link.click();
     addToast('✅ CV downloaded successfully!', 'success');
     setIsMenuOpen(false);
@@ -225,91 +214,36 @@ function App() {
   const projects: Project[] = [
     {
       id: 1,
+      title: "Yasaka Handil Bakti",
+      description: "A culinary UMKM landing page website featuring a digital menu, storefront, and WhatsApp integration with a responsive mobile-first design.",
+      tech: ["Vite", "Tailwind CSS", "React"],
+      image: "/projects/Yasaka.png",
+      demo: "https://yasaka-handilbakti.netlify.app"
+    },
+    {
+      id: 2,
+      title: "ReCV AI",
+      description: "An AI-powered resume builder with a unique Neobrutalism aesthetic, featuring ATS-friendly templates and integrated cover letter generation.",
+      tech: ["Next.js", "Tailwind CSS", "OpenAI API"],
+      image: "/projects/ReCV.png",
+      demo: "https://recv-ai.me"
+    },
+    {
+      id: 3,
       title: "E-Commerce Platform",
-      description: "Full-stack e-commerce dengan payment gateway integration",
+      description: "Full-stack e-commerce with payment gateway integration and real-time inventory management.",
       tech: ["React", "Node.js", "MongoDB", "Stripe"],
       image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=600&fit=crop"
     },
     {
-      id: 2,
+      id: 4,
       title: "Task Management System",
-      description: "Real-time collaboration tool untuk team productivity",
+      description: "Real-time collaboration tool for team productivity with drag-and-drop functionality.",
       tech: ["TypeScript", "React", "Firebase", "Tailwind"],
       image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=600&fit=crop"
-    },
-    {
-      id: 3,
-      title: "Weather Analytics Dashboard",
-      description: "Data visualization dengan real-time weather API",
-      tech: ["React", "D3.js", "REST API", "Chart.js"],
-      image: "https://images.unsplash.com/photo-1592210454359-9043f067919b?w=800&h=600&fit=crop"
-    },
-    {
-      id: 4,
-      title: "Social Media App",
-      description: "Platform social networking dengan chat feature",
-      tech: ["React Native", "Socket.io", "Express", "MongoDB"],
-      image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=600&fit=crop"
     }
   ];
 
-  // DATA - Certificates
-  const certificates: Certificate[] = [
-    {
-      id: 1,
-      title: "React Advanced",
-      issuer: "Udemy",
-      date: "2024",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a5?w=500&h=600&fit=crop",
-      link: "https://udemy.com",
-      description: "Advanced React patterns and best practices"
-    },
-    {
-      id: 2,
-      title: "Web Development",
-      issuer: "freeCodeCamp",
-      date: "2024",
-      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=600&fit=crop",
-      link: "https://freecodecamp.org",
-      description: "Full-stack web development certification"
-    },
-    {
-      id: 3,
-      title: "TypeScript Mastery",
-      issuer: "Coursera",
-      date: "2023",
-      image: "https://images.unsplash.com/photo-1516321318423-f06f70d504f0?w=500&h=600&fit=crop",
-      link: "https://coursera.org",
-      description: "Advanced TypeScript and OOP concepts"
-    },
-    {
-      id: 4,
-      title: "Database Design",
-      issuer: "Pluralsight",
-      date: "2023",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&h=600&fit=crop",
-      link: "https://pluralsight.com",
-      description: "Database design and optimization"
-    },
-    {
-      id: 5,
-      title: "Cloud Architecture",
-      issuer: "AWS",
-      date: "2023",
-      image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=500&h=600&fit=crop",
-      link: "https://aws.amazon.com",
-      description: "AWS cloud solutions architect"
-    },
-    {
-      id: 6,
-      title: "DevOps Fundamentals",
-      issuer: "Linux Academy",
-      date: "2022",
-      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=600&fit=crop",
-      link: "https://linuxacademy.com",
-      description: "Docker, Kubernetes, and CI/CD pipelines"
-    }
-  ];
 
   // PROJECT CARDS ANIMATION - Intersection Observer with staggered badge pop-up
   useEffect(() => {
@@ -468,19 +402,6 @@ function App() {
               Download CV
             </button>
 
-            {/* Certificates Button */}
-            <button
-              onClick={() => {
-                setIsCertificatesModalOpen(true);
-                setIsMenuOpen(false);
-              }}
-              className="w-full px-4 py-3 rounded-lg bg-gradient-to-r from-cyan-500/80 to-blue-500/80 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 border border-white/20"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Certificates
-            </button>
 
             {/* Divider */}
             <div className="h-px bg-white/10" />
@@ -726,10 +647,14 @@ function App() {
                   {/* Hover overlay with eye icon */}
                   <div className="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                     <a 
-                      href="#"
+                      href={project.demo || "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={(e) => {
-                        e.preventDefault();
-                        alert(`Project link placeholder for ${project.title}`);
+                        if (!project.demo) {
+                          e.preventDefault();
+                          addToast(`Coming soon! No demo available for ${project.title}`, 'info');
+                        }
                       }}
                       className="flex items-center justify-center w-16 h-16 rounded-full border-2 border-white hover:bg-white hover:text-black transition-all duration-300 transform group-hover:scale-100 scale-90"
                     >
@@ -938,135 +863,6 @@ function App() {
         </div>
       </section>
 
-      {/* CERTIFICATES MODAL */}
-      {isCertificatesModalOpen && (
-        <>
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
-            onClick={() => {
-              setIsCertificatesModalOpen(false);
-              setSelectedCertificate(null);
-            }}
-          />
-          
-          {/* Modal Content */}
-          <div 
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            onClick={() => {
-              setIsCertificatesModalOpen(false);
-              setSelectedCertificate(null);
-            }}
-          >
-            <div 
-              className="w-full max-w-6xl max-h-[90vh] bg-black/40 backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden flex flex-col"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Header */}
-              <div className="flex justify-between items-center p-8 border-b border-white/10">
-                <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Certificates & Courses</h2>
-                <button
-                  onClick={() => {
-                    setIsCertificatesModalOpen(false);
-                    setSelectedCertificate(null);
-                  }}
-                  className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all"
-                >
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Certificates Grid */}
-              <div className="flex-1 overflow-y-auto p-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {certificates.map((cert) => (
-                    <div
-                      key={cert.id}
-                      onClick={() => setSelectedCertificate(cert)}
-                      className="group cursor-pointer"
-                    >
-                      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 aspect-video">
-                        {/* Image with zoom effect */}
-                        <img
-                          src={cert.image}
-                          alt={cert.title}
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                        />
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all duration-300 flex flex-col justify-end p-4">
-                          <h3 className="text-white font-bold text-lg">{cert.title}</h3>
-                          <p className="text-white/80 text-sm">{cert.issuer} • {cert.date}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* LIGHTBOX FOR CERTIFICATE PREVIEW */}
-      {selectedCertificate && isCertificatesModalOpen && (
-        <div
-          className="fixed inset-0 bg-black/90 z-[60] flex items-center justify-center p-4 backdrop-blur-md"
-          onClick={() => setSelectedCertificate(null)}
-        >
-          <div
-            className="relative max-w-4xl w-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setSelectedCertificate(null)}
-              className="absolute -top-12 right-0 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all z-[61]"
-            >
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            {/* Certificate Image */}
-            <div className="bg-black/50 backdrop-blur rounded-2xl overflow-hidden">
-              <img
-                src={selectedCertificate.image}
-                alt={selectedCertificate.title}
-                className="w-full h-auto"
-              />
-            </div>
-
-            {/* Certificate Details */}
-            <div className="mt-6 bg-black/40 backdrop-blur-xl border border-white/20 rounded-2xl p-6 text-white">
-              <h3 className="text-2xl font-bold mb-2">{selectedCertificate.title}</h3>
-              <p className="text-white/80 mb-2">
-                <span className="font-semibold">Issuer:</span> {selectedCertificate.issuer}
-              </p>
-              <p className="text-white/80 mb-4">
-                <span className="font-semibold">Date:</span> {selectedCertificate.date}
-              </p>
-              {selectedCertificate.description && (
-                <p className="text-white/70 mb-6">{selectedCertificate.description}</p>
-              )}
-              {selectedCertificate.link && (
-                <a
-                  href={selectedCertificate.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500/80 to-blue-500/80 hover:from-cyan-600 hover:to-blue-600 rounded-lg text-white font-semibold transition-all"
-                >
-                  Visit Certificate
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-6l4-4m0 0l-4 4m4-4v12" />
-                  </svg>
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* GRADIENT ANIMATED FOOTER LINE */}
       <div className="gradient-footer-border" />
