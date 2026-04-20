@@ -594,7 +594,7 @@ function App() {
               >
                 <div className="flex items-center gap-3 px-6 py-3 border-2 border-gray-700 bg-black/50 hover:border-white transition-all duration-300">
                   <div 
-                    className="transition-all duration-300 grayscale group-hover:grayscale-0"
+                    className="transition-all duration-300 grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100"
                     style={{ color: skill.color }}
                   >
                     {skill.icon}
